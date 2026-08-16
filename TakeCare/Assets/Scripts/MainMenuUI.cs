@@ -27,7 +27,7 @@ public class MainMenuUI : MonoBehaviour
     public void onOptionsButtonClicked()
     {
         Debug.Log("Options button clicked");
-        SceneManager.LoadScene("OptionsScene");
+        SceneManager.LoadScene("OptionsMenu");
     }
 
     public void onQuitButtonClicked()

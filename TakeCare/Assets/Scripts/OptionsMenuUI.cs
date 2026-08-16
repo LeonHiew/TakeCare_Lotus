@@ -7,15 +7,18 @@ using TMPro;
 public class OptionsMenuUI : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
+    public Slider volumeSlider;
     // Start is called before the first frame update
     void Start()
     {
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+        volumeSlider.onValueChanged.AddListener(OnVolumeSliderChanged);
     }
 
     void OnDestroy()
     {
         dropdown.onValueChanged.RemoveListener(OnDropdownValueChanged);
+        volumeSlider.onValueChanged.RemoveListener(OnVolumeSliderChanged);
     }
 
     // Update is called once per frame
@@ -35,10 +38,17 @@ public class OptionsMenuUI : MonoBehaviour
 		// Debug.Log("Selected: " + selectedValue);
         // Debug.Log(value);
 
-        // ChangeResolution(selectedValue);
+        ChangeResolution(selectedValue);
 
 
 	}
+    
+    public void OnVolumeSliderChanged(float value)
+    {
+        Debug.Log("Volume slider changed to: " + value);
+        AudioListener.volume = Mathf.Clamp01(value);
+
+    }
 
     public void ChangeResolution(string selectedValue)
     {
@@ -63,5 +73,11 @@ public class OptionsMenuUI : MonoBehaviour
             Screen.SetResolution(1280, 720, true);
             Debug.Log("Resolution set to 720p");
         }
+    }
+
+    public void OnBackButtonClicked()
+    {
+        Debug.Log("Back button clicked");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }
