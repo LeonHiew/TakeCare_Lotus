@@ -9,10 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private float moveSpeed = 15f;
 
-    private int playerScore = 0; //most likely have to make this a public func to total the score in the gamecontroller file 
-
     private Rigidbody2D rb;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("GoodItem"))
         {
-            playerScore += 1; 
+            playerScore += 1;
         }
     }*/
 }
