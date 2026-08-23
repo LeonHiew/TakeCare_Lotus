@@ -8,6 +8,8 @@ public class OptionsMenuUI : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
     public Slider volumeSlider;
+
+    public string backButtonScene = "MainMenu";     
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +80,6 @@ public class OptionsMenuUI : MonoBehaviour
     public void OnBackButtonClicked()
     {
         Debug.Log("Back button clicked");
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(backButtonScene);
     }
 }
