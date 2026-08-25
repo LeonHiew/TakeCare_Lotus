@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private float horizontalInput;
 
-    private float moveSpeed = 15f;
+    private float moveSpeed = 20f;
 
     private Rigidbody2D rb;
 
@@ -20,21 +20,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
     }
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("GoodItem"))
-        {
-            playerScore += 1;
-        }
-    }*/
+    
 }
 
 

@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class ObjectFallController : MonoBehaviour
 {
-    private float wait = 0.1f;
+    [SerializeField] private float minWait = 1f;
+    [SerializeField] private float maxWait = 3f;
+
 
     public GameObject fallingObject;
     
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Fall", wait, wait);
+        ScheduleNextFall();
     }
+
+	void ScheduleNextFall()
+	{
+		float nextWait = Random.Range(minWait, maxWait);
+		Invoke(nameof(Fall), nextWait);
+	}
 
     void Fall()
     {
-        Instantiate(fallingObject, new Vector3(Random.Range(-8, 9), 7, 0), Quaternion.identity);
+        Instantiate(fallingObject, new Vector3(Random.Range(-7, 8), 7, 0), Quaternion.identity);
+		ScheduleNextFall();
     }
 
    

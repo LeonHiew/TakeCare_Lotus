@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private ObjectFallController objectFallController;
 	[SerializeField] private GameObject retryButton; 
     
+    [SerializeField] private GameObject homeButton; 
+    
     private int score = 0;
     private float gameDuration = 10f;
     private float timeRemaining;
@@ -39,6 +41,9 @@ public class GameController : MonoBehaviour
 
 		if (retryButton != null)
 			retryButton.SetActive(false);
+        
+        if (homeButton != null)
+            homeButton.SetActive(false);
     }
 
     void Update()
@@ -85,6 +90,9 @@ public class GameController : MonoBehaviour
 
 		if (retryButton != null)
 			retryButton.SetActive(true);
+        
+        if (homeButton != null)
+            homeButton.SetActive(true);
 
 		Time.timeScale = 0f;
     }
@@ -94,4 +102,10 @@ public class GameController : MonoBehaviour
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+    public void HomeClicked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("SampleScene");
+    }
 }
