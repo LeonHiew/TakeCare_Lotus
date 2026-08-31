@@ -8,12 +8,15 @@ using UnityEngine.SceneManagement;
 public class FishGameController : MonoBehaviour
 {
     public static FishGameController Instance;
+
+    [SerializeField] private string homeSceneName = "SampleScene";
     
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI gameOverText;
 	[SerializeField] private GameObject retryButton; 
     [SerializeField] private GameObject homeButton;
+    [SerializeField] private TextMeshProUGUI failTimerText;
 
     [SerializeField] private float gameDuration = 30f;
     
@@ -40,6 +43,7 @@ public class FishGameController : MonoBehaviour
         
         UpdateScoreUI();
         UpdateTimerUI();
+        HideFailTimerUI();
         
         if(gameOverText != null)
             gameOverText.gameObject.SetActive(false);
@@ -92,6 +96,7 @@ public class FishGameController : MonoBehaviour
     private void EndGame()
     {
         isGameOver = true;
+        HideFailTimerUI();
 
         if (gameOverText != null)
         {
@@ -107,6 +112,24 @@ public class FishGameController : MonoBehaviour
 
 		Time.timeScale = 0f;
     }
+
+    public void SetFailTimerUI(float secondsRemaining)
+    {
+        if (failTimerText == null)
+            return;
+        
+        if(!failTimerText.gameObject.activeSelf)
+            failTimerText.gameObject.SetActive(true);
+
+        failTimerText.text = "Catch in: " + Mathf.CeilToInt(secondsRemaining);
+        failTimerText.color = secondsRemaining <= 3f ? Color.red : Color.white;
+    }
+
+    public void HideFailTimerUI()
+    {
+        if(failTimerText != null)
+            failTimerText.gameObject.SetActive(false);
+    }
    
 	public void RetryClicked()
 	{
@@ -117,6 +140,6 @@ public class FishGameController : MonoBehaviour
     public void HomeClicked()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(homeSceneName);
     }
 }

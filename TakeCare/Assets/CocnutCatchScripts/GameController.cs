@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     public Canvas gameOverCanvas;
  
+    [SerializeField] private string homeSceneName = "SampleScene";
     
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -106,6 +107,6 @@ public class GameController : MonoBehaviour
     public void HomeClicked()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(homeSceneName);
     }
 }

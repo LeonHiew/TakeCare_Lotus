@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.UIElements;
 
 public class FishingMiniGame : MonoBehaviour
 {
@@ -25,7 +23,7 @@ public class FishingMiniGame : MonoBehaviour
     [SerializeField] private float hookSize = 0.15f;
     [SerializeField] private float hookPower = 0.5f;
     [SerializeField] private float hookPullPower = 0.6f;
-    [SerializeField] private float hookGravityPower = 0.3f;
+    [SerializeField] private float hookGravityPower = 0.9f;
     [SerializeField] private float hookProgressDegrationPower = 0.1f;
     [SerializeField] private float hookMaxSpeed = 1f;
     [SerializeField] private SpriteRenderer hookSpriteRenderer;
@@ -36,6 +34,11 @@ public class FishingMiniGame : MonoBehaviour
     //progress bar container 
     [SerializeField] private Transform progressBarContainer;
     
+    //fail timer and respawn delay 
+    [SerializeField] private float failTimeLimit = 8f;
+    [SerializeField] private float respawnDelay = 2f;
+    private float failTimer;
+    private float respawnTimer;
 
 
     private void Start()
@@ -49,8 +52,11 @@ public class FishingMiniGame : MonoBehaviour
         hookProgress = 0f;
         hookPosition = hookSize / 2f;
         hookPullVelocity = 0f;
+        failTimer = failTimeLimit;
+        respawnTimer = 0f;
         
         SpawnFish();
+        fish.gameObject.SetActive(true);
 
         hook.position = Vector3.Lerp(bottomPivot.position, topPivot.position, hookPosition);
 
@@ -84,6 +90,14 @@ public class FishingMiniGame : MonoBehaviour
     {
         if (FishGameController.Instance != null && FishGameController.Instance.IsGameOver)
             return;
+
+        if (respawnTimer > 0f)
+        {
+            respawnTimer -= Time.deltaTime;
+            if(respawnTimer <= 0f)
+                ResetRound();
+            return;
+        }
         
         Fish();
         Hook();
@@ -92,6 +106,16 @@ public class FishingMiniGame : MonoBehaviour
 
     private void ProgressCheck()
     {
+        failTimer -= Time.deltaTime;
+        if (failTimer <= 0f)
+        {
+            FishEscaped();
+            return;
+        }
+        
+        if(FishGameController.Instance != null)
+            FishGameController.Instance.SetFailTimerUI(failTimer);
+        
         float min = hookPosition - hookSize / 2;
         float max = hookPosition + hookSize / 2;
 
@@ -121,8 +145,29 @@ public class FishingMiniGame : MonoBehaviour
     {
         if(FishGameController.Instance != null)
             FishGameController.Instance.AddScore(1);
+
+        EndCatch();
+    }
+
+    private void EndCatch()
+    {
+        respawnTimer = respawnDelay;
+        hookProgress = 0f;
         
-        ResetRound();
+        fish.gameObject.SetActive(false);
+        
+        if(FishGameController.Instance != null)
+            FishGameController.Instance.HideFailTimerUI();
+        
+        Vector3 ls = progressBarContainer.localScale;
+        ls.y = 0f;
+        progressBarContainer.localScale = ls;
+    }
+
+    private void FishEscaped()
+    {
+        Debug.Log("The Fish Got Away!");
+        EndCatch();
     }
 
     void Hook()
