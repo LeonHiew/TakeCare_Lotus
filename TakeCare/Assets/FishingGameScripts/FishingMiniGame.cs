@@ -22,11 +22,12 @@ public class FishingMiniGame : MonoBehaviour
     
     //hook bar movement and size
     [SerializeField] private Transform hook;
-    [SerializeField] private float hookSize = 0.1f;
+    [SerializeField] private float hookSize = 0.15f;
     [SerializeField] private float hookPower = 0.5f;
-    [SerializeField] private float hookPullPower = 0.01f;
-    [SerializeField] private float hookGravityPower = 0.005f;
+    [SerializeField] private float hookPullPower = 0.6f;
+    [SerializeField] private float hookGravityPower = 0.3f;
     [SerializeField] private float hookProgressDegrationPower = 0.1f;
+    [SerializeField] private float hookMaxSpeed = 1f;
     [SerializeField] private SpriteRenderer hookSpriteRenderer;
     private float hookPosition;
     private float hookProgress;
@@ -35,15 +36,37 @@ public class FishingMiniGame : MonoBehaviour
     //progress bar container 
     [SerializeField] private Transform progressBarContainer;
     
-    //win lose cons 
-    [SerializeField] private float failTimer = 10f;
-    private bool pause = false;
-    
 
 
     private void Start()
     {
         Resize();
+        ResetRound();
+    }
+
+    private void ResetRound()
+    {
+        hookProgress = 0f;
+        hookPosition = hookSize / 2f;
+        hookPullVelocity = 0f;
+        
+        SpawnFish();
+
+        hook.position = Vector3.Lerp(bottomPivot.position, topPivot.position, hookPosition);
+
+        Vector3 ls = progressBarContainer.localScale;
+        ls.y = 0f;
+        progressBarContainer.localScale = ls;
+    }
+
+    private void SpawnFish()
+    {
+        fishPosition = UnityEngine.Random.Range(0.15f, 0.85f);
+        fishDestination = UnityEngine.Random.value;
+        fishTimer = UnityEngine.Random.value * timerMultiplicator;
+        fishSpeed = 0f;
+
+        fish.position = Vector3.Lerp(bottomPivot.position, topPivot.position, fishPosition);
     }
 
     private void Resize()
@@ -59,7 +82,7 @@ public class FishingMiniGame : MonoBehaviour
 
     private void Update()
     {
-        if (pause)
+        if (FishGameController.Instance != null && FishGameController.Instance.IsGameOver)
             return;
         
         Fish();
@@ -69,10 +92,6 @@ public class FishingMiniGame : MonoBehaviour
 
     private void ProgressCheck()
     {
-        Vector3 ls = progressBarContainer.localScale;
-        ls.y = hookProgress;
-        progressBarContainer.localScale = ls;
-
         float min = hookPosition - hookSize / 2;
         float max = hookPosition + hookSize / 2;
 
@@ -83,32 +102,27 @@ public class FishingMiniGame : MonoBehaviour
         else
         {
             hookProgress -= hookProgressDegrationPower * Time.deltaTime;
-
-            failTimer -= Time.deltaTime;
-            if (failTimer < 0f)
-            { 
-                Lose();
-            }
         }
 
         if (hookProgress >= 1f)
         {
             Win();
+            return;
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
-    }
-
-    private void Lose()
-    {
-        pause = true;
-        Debug.Log("You Lose!");
+        
+        Vector3 ls = progressBarContainer.localScale;
+        ls.y = hookProgress;
+        progressBarContainer.localScale = ls;
     }
 
     private void Win()
     {
-        pause = true;
-        Debug.Log("You Win!");
+        if(FishGameController.Instance != null)
+            FishGameController.Instance.AddScore(1);
+        
+        ResetRound();
     }
 
     void Hook()
@@ -122,7 +136,8 @@ public class FishingMiniGame : MonoBehaviour
             hookPullVelocity -= hookGravityPower * Time.deltaTime;
         }
 
-        hookPosition += hookPullVelocity;
+        hookPullVelocity = Mathf.Clamp(hookPullVelocity, -hookMaxSpeed, hookMaxSpeed);
+        hookPosition += hookPullVelocity * Time.deltaTime;
         
         if (hookPosition - hookSize / 2 <= 0f && hookPullVelocity < 0f)
         { 

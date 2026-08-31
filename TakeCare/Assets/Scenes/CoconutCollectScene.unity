@@ -287,8 +287,8 @@ Transform:
   m_GameObject: {fileID: 327590483}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59828043, y: -2.52, z: -4.658357}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.9116, y: -2.9005, z: -4.658357}
+  m_LocalScale: {x: 1.6266, y: 0.2391156, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minWait: 1
-  maxWait: 3
+  maxWait: 2
   fallingObject: {fileID: 8037673617434237981, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
 --- !u!4 &559921297
 Transform:
