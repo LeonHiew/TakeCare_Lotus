@@ -8,17 +8,23 @@ using UnityEngine.SceneManagement;
 public class FishGameController : MonoBehaviour
 {
     public static FishGameController Instance;
-
+    
+    [Header("Load to main")] 
     [SerializeField] private string homeSceneName = "SampleScene";
     
+    [Header("UI Buttons")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI gameOverText;
 	[SerializeField] private GameObject retryButton; 
     [SerializeField] private GameObject homeButton;
     [SerializeField] private TextMeshProUGUI failTimerText;
-
+    
+    [Header("Game Duration")] 
     [SerializeField] private float gameDuration = 30f;
+
+    [Header("Catch Results")] 
+    [SerializeField] private TextMeshProUGUI catchResultText;
     
     private int score = 0;
     private float timeRemaining;
@@ -97,6 +103,8 @@ public class FishGameController : MonoBehaviour
     {
         isGameOver = true;
         HideFailTimerUI();
+        
+        catchResultText.gameObject.SetActive(false);
 
         if (gameOverText != null)
         {
@@ -142,4 +150,21 @@ public class FishGameController : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(homeSceneName);
     }
+
+    public void ShowCatchResult(string message, Color color)
+    {
+        if (catchResultText == null)
+            return;
+        
+        catchResultText.gameObject.SetActive(true);
+        catchResultText.text = message;
+        catchResultText.color = color;
+    }
+
+    public void HideCatchResult()
+    {
+        if(catchResultText != null)
+            catchResultText.gameObject.SetActive(false);
+    }
+    
 }

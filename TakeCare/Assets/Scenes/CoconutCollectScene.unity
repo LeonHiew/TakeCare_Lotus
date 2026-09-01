@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac22cba1485a35f439ca8403208cc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 20
 --- !u!50 &327590485
 Rigidbody2D:
   serializedVersion: 4
@@ -456,9 +457,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa8e13d36325c747ad3962d9ff66a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minWait: 1
-  maxWait: 2
-  fallingObject: {fileID: 8037673617434237981, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
+  goodFallingObject: {fileID: 4481915048960503923, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
+  badFallingObject: {fileID: 3596784995813074073, guid: 2963cfc9eef18684c9c2191bbe0e371e, type: 3}
+  startMinWait: 1.2
+  startMaxWait: 2.2
+  endMinWait: 0.35
+  endMaxWait: 0.8
+  rampDuration: 90
+  spawnY: 7
+  minX: -7
+  maxX: 7
+  minSeperation: 2
+  badChance: 0.2
 --- !u!4 &559921297
 Transform:
   m_ObjectHideFlags: 0
@@ -856,6 +866,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverCanvas: {fileID: 1814635172}
+  homeSceneName: SampleScene
+  gameDuration: 20
   scoreText: {fileID: 986473049}
   timerText: {fileID: 885495308}
   gameOverText: {fileID: 525689735}
@@ -1387,7 +1399,7 @@ GameObject:
   - component: {fileID: 1686831643}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1828,7 +1840,6 @@ GameObject:
   - component: {fileID: 2100688680}
   - component: {fileID: 2100688679}
   - component: {fileID: 2100688678}
-  - component: {fileID: 2100688681}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1910,21 +1921,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2100688681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100688677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa8e13d36325c747ad3962d9ff66a92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minWait: 0.15
-  maxWait: 1.5
-  fallingObject: {fileID: 8037673617434237981, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

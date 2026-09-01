@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GoodItem
   - BadItem
+  - Ground
   layers:
   - Default
   - TransparentFX

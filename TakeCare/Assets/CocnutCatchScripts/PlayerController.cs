@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Speed")] 
+    [SerializeField] private float moveSpeed = 20f; 
+    
     private float horizontalInput;
-
-    private float moveSpeed = 20f;
-
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
