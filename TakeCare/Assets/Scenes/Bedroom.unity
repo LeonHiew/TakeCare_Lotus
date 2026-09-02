@@ -1312,6 +1312,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 401802975927826910, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+      propertyPath: m_XAxis.m_InvertInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401802975927826910, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+      propertyPath: m_YAxis.m_InvertInput
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1519403286998570037, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
       propertyPath: m_Layer
       value: 6
