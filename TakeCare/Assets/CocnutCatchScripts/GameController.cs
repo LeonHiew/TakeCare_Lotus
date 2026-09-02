@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,22 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     public Canvas gameOverCanvas;
- 
     
+    [Header("Load to main")] 
+    [SerializeField] private string homeSceneName = "SampleScene";
+    
+    [Header("Game Duration")] 
+    [SerializeField] private float gameDuration = 10f;
+    
+    [Header("UI Buttons")] 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI gameOverText;
     [SerializeField] private ObjectFallController objectFallController;
 	[SerializeField] private GameObject retryButton; 
+    [SerializeField] private GameObject homeButton; 
     
     private int score = 0;
-    private float gameDuration = 10f;
     private float timeRemaining;
     private bool isGameOver = false;
 
@@ -39,6 +46,9 @@ public class GameController : MonoBehaviour
 
 		if (retryButton != null)
 			retryButton.SetActive(false);
+        
+        if (homeButton != null)
+            homeButton.SetActive(false);
     }
 
     void Update()
@@ -59,10 +69,11 @@ public class GameController : MonoBehaviour
     public void AddScore(int amount)
     {
         if (isGameOver) return;
-        
-        score += amount;
+
+        score = Mathf.Max(0, score + amount);
         UpdateScoreUI();
     }
+    
 
     private void UpdateScoreUI()
     {
@@ -85,6 +96,9 @@ public class GameController : MonoBehaviour
 
 		if (retryButton != null)
 			retryButton.SetActive(true);
+        
+        if (homeButton != null)
+            homeButton.SetActive(true);
 
 		Time.timeScale = 0f;
     }
@@ -94,4 +108,10 @@ public class GameController : MonoBehaviour
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+    public void HomeClicked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(homeSceneName);
+    }
 }
