@@ -834,7 +834,7 @@ MonoBehaviour:
   retryButton: {fileID: 524631372}
   homeButton: {fileID: 1160188360}
   failTimerText: {fileID: 1782006937}
-  gameDuration: 30
+  gameDuration: 50
   catchResultText: {fileID: 921949631}
 --- !u!4 &980751777
 Transform:
@@ -1599,7 +1599,7 @@ MonoBehaviour:
   hookMaxSpeed: 1
   hookSpriteRenderer: {fileID: 1250310515}
   progressBarContainer: {fileID: 2020920319}
-  failTimeLimit: 8
+  failTimeLimit: 12
   respawnDelay: 1.5
 --- !u!4 &1348212270
 Transform:
