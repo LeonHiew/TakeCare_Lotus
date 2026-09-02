@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("InputX", inputX);
         animator.SetFloat("InputY", inputY);
         animator.SetBool("IsMoving", hasMovementInput);
-        animator.SetBool("IsSprinting", Input.GetKey(KeyCode.LeftShift) && hasMovementInput);
 
         if (hasMovementInput)
         {
