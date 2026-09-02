@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
 
     public float BaseFov = 50f;
+    private Vector3 gravityVelocity;
 
     public CinemachineImpulseSource sprintImpulse;
 
@@ -59,10 +60,21 @@ public class PlayerMovement : MonoBehaviour
                 Time.deltaTime * 10f
             );
         }
+        if (characterController.isGrounded)
+        {
+            gravityVelocity.y = -2f;
+        }
+        else
+        {
+            gravityVelocity.y += Physics.gravity.y * Time.deltaTime;
+        }
     }
 
     void OnAnimatorMove()
     {
-        characterController.Move(animator.deltaPosition);
+        Vector3 movement = animator.deltaPosition;
+        movement.y = gravityVelocity.y * Time.deltaTime;
+
+        characterController.Move(movement);
     }
 }
