@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55e368ee342da94095b88fdc30a7901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homeSceneName: SampleScene
+  homeSceneName: Scene2D
   scoreText: {fileID: 1164178982}
   timerText: {fileID: 2084543147}
   gameOverText: {fileID: 1201796596}

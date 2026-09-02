@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8f09cddbd61b34182adb5f6fcabcee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButtonScene: Scene2D
+  startButtonScene: Bedroom
   optionsButtonScene: OptionsMenu
 --- !u!4 &466853903
 Transform:
