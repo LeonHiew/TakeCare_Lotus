@@ -1,11 +1,11 @@
 using UnityEngine;
-using Unity.Cinemachine;
+using Cinemachine;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
-    public CinemachineCamera virtualCamera;
+    public CinemachineVirtualCamera virtualCamera;
 
     private Animator animator;
     public float BaseFov = 50f;
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (virtualCamera != null)
         {
-            virtualCamera.Lens.FieldOfView = BaseFov;
+            virtualCamera.m_Lens.FieldOfView = BaseFov;
         }
     }
 
