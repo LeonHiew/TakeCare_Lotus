@@ -28,6 +28,18 @@ public class FallingObject : MonoBehaviour
         {
 
             collected = true;
+
+            if (scoreValue < 0)
+            {
+                PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+                if (player != null && player.IsShieldActive())
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+            
             GameController.Instance.AddScore(scoreValue);
             Destroy(gameObject);
         }
