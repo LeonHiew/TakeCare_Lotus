@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shieldCooldown = 8f;
     [SerializeField] private float shieldDuration = 5f;
     [SerializeField] private GameObject shieldSprite;
+
+    [Header("Player Stunned")] 
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Color stunColor = Color.yellow;
     
     
     
@@ -42,12 +46,19 @@ public class PlayerController : MonoBehaviour
 
     private bool isShieldActive = false;
     private bool canActivateShield = true;
-    
+
+    private float stunTimer;
+    private Color originalColor;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (playerSprite == null)
+            playerSprite = GetComponent<SpriteRenderer>();
+        if (playerSprite != null)
+            originalColor = playerSprite.color;
 
         if (shieldSprite != null)
             shieldSprite.SetActive(false);
@@ -56,6 +67,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stunTimer > 0)
+        {
+            stunTimer -= Time.deltaTime;
+            horizontalInput = 0f;
+
+            if (stunTimer <= 0f)
+            {
+                stunTimer = 0f;
+                if (playerSprite != null)
+                {
+                    playerSprite.color = originalColor;
+                }
+            }
+
+            return;
+        }
+        
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (horizontalInput != 0)
@@ -156,6 +184,19 @@ public class PlayerController : MonoBehaviour
     public bool IsShieldActive()
     {
         return isShieldActive;
+    }
+
+    public void Stun(float duration)
+    {
+        stunTimer = Mathf.Max(stunTimer, duration);
+
+        if (playerSprite != null)
+            playerSprite.color = stunColor;
+    }
+
+    public bool IsStunned()
+    {
+        return stunTimer > 0f;
     }
     
     

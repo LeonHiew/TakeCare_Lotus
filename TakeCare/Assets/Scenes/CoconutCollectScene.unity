@@ -171,6 +171,8 @@ MonoBehaviour:
   shieldCooldown: 3
   shieldDuration: 5
   shieldSprite: {fileID: 722076367}
+  playerSprite: {fileID: 0}
+  stunColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!50 &327590485
 Rigidbody2D:
   serializedVersion: 4
@@ -476,6 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goodFallingObject: {fileID: 4481915048960503923, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
   badFallingObject: {fileID: 3596784995813074073, guid: 2963cfc9eef18684c9c2191bbe0e371e, type: 3}
+  stunFallingObject: {fileID: 4747080671363364917, guid: 0059a690fbd40844dacebefa810dd24b, type: 3}
   startMinWait: 1.2
   startMaxWait: 2.2
   endMinWait: 0.35
@@ -486,6 +489,7 @@ MonoBehaviour:
   maxX: 7
   minSeperation: 2
   badChance: 0.2
+  stunChance: 0.2
 --- !u!4 &559921297
 Transform:
   m_ObjectHideFlags: 0
