@@ -6,16 +6,23 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Speed")] 
-    [SerializeField] private float moveSpeed = 10f; 
-    [SerializeField] private float runMultiplier = 1.5f;
-    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift; 
+    [SerializeField] private float moveSpeed = 10f; //15 if accel, 10 if shift sprint
+    [SerializeField] private float runMultiplier = 2f;
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
+
+    [Header("Player acceleration")] 
+    [SerializeField] private float acceleration = 45f;
+    [SerializeField] private float deceleration = 15f;
+    [SerializeField] private float turnAcceleration = 100f;
+    [SerializeField] private float dragInfluence = 1.5f;
+    
     
     [Header("Dash ability")] 
     [SerializeField] private bool dashEnabled = true;
     [SerializeField] private KeyCode dashKey = KeyCode.Space;
-    [SerializeField] private float dashSpeed = 30f;
-    [SerializeField] private float dashDuration = 0.15f;
-    [SerializeField] private float dashCooldown = 1.5f;
+    [SerializeField] private float dashSpeed = 30f; //25 if accel, 30 if shift sprint
+    [SerializeField] private float dashDuration = 0.15f; //0.1 if accel, 0.15 if shift sprint
+    [SerializeField] private float dashCooldown = 1f;
     
     [Header("Shield ability")] 
     [SerializeField] private bool shieldEnabled = true;
@@ -71,8 +78,34 @@ public class PlayerController : MonoBehaviour
         if(isDashing)
             return;
         
-        float currentSpeed = Input.GetKey(sprintKey) ? moveSpeed * runMultiplier : moveSpeed;
-        rb.velocity = new Vector2(horizontalInput * currentSpeed, rb.velocity.y);
+        //for sprint movement (no acceleration, MAKE SURE TO COMMENT OUT ACCELERATION)
+        
+        /*float currentSpeed = Input.GetKey(sprintKey) ? moveSpeed * runMultiplier : moveSpeed;
+        rb.velocity = new Vector2(horizontalInput * currentSpeed, rb.velocity.y);*/
+
+        //for player acceleration (no sprint, MAKE SURE TO COMMENT OUT SPRINT)
+        
+        float targetSpeed = horizontalInput * moveSpeed;
+        float currentSpeed = rb.velocity.x;
+
+        float rate;
+        if (horizontalInput == 0)
+        {
+            float speedFactor = Mathf.Abs(currentSpeed) / Mathf.Max(moveSpeed, 0.01f);
+            rate = deceleration * (1f + speedFactor * dragInfluence);
+        }
+        else if (currentSpeed != 0f && Mathf.Sign(horizontalInput) != Mathf.Sign(currentSpeed))
+        {
+            rate = turnAcceleration;
+        }
+        else
+        {
+            rate = acceleration;
+        }
+
+        float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, rate * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+
     }
 
     private IEnumerator Dash()

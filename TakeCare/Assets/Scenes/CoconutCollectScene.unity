@@ -154,13 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac22cba1485a35f439ca8403208cc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 15
   runMultiplier: 2
   sprintKey: 304
+  acceleration: 45
+  deceleration: 15
+  turnAcceleration: 100
+  dragInfluence: 1.5
   dashEnabled: 1
   dashKey: 32
-  dashSpeed: 35
-  dashDuration: 0.15
+  dashSpeed: 25
+  dashDuration: 0.1
   dashCooldown: 1
   shieldEnabled: 1
   shieldKey: 101
