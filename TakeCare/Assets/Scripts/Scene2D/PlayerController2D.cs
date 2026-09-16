@@ -11,10 +11,14 @@ public class PlayerController2D : MonoBehaviour
 
     public bool canMove = true;
 
+    public float clickMoveDuration = 3f;
+    private bool clickMoving = false;   
+
     bool onLand = false;
 
     int landEnterCount = 0;
     // Start is called before the first frame update
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();  
@@ -23,6 +27,16 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(1) && !clickMoving)
+        {
+            Vector3 mouseScreenPos = Input.mousePosition;
+            Vector3 targetPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+
+            targetPos.z = transform.position.z;
+
+            StartCoroutine(MoveToPoint(targetPos));
+        }
+
         if (!canMove)
         {
             rb.velocity = Vector2.zero;
@@ -79,6 +93,30 @@ public class PlayerController2D : MonoBehaviour
         canMove = false;
     }
 
-  
+    private IEnumerator MoveToPoint(Vector3 targetPosition)
+    {
+        clickMoving = true;
+        DisablePlayerMovement();
+
+        rb.velocity = Vector2.zero;
+
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < clickMoveDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / clickMoveDuration;
+
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+
+        clickMoving = false;
+        EnablePlayerMovement();
+    }
+    
     
 }
