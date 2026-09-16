@@ -9,6 +9,8 @@ public class PlayerController2D : MonoBehaviour
     float speedX, speedY;
     Rigidbody2D rb;
 
+    public bool canMove = true;
+
     bool onLand = false;
 
     int landEnterCount = 0;
@@ -21,6 +23,12 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!canMove)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         speedX = Input.GetAxisRaw("Horizontal");
         speedY = Input.GetAxisRaw("Vertical");
         rb.velocity = new Vector2(speedX, speedY).normalized * moveSpeed;
@@ -61,5 +69,16 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    public void EnablePlayerMovement()
+    {
+       canMove = true;
+    }
+
+    public void DisablePlayerMovement()
+    {
+        canMove = false;
+    }
+
+  
     
 }

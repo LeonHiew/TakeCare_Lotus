@@ -13,29 +13,26 @@ public class DialogueManager : MonoBehaviour
     [Header("Ink Story")]
     [SerializeField] private TextAsset inkJSON;
 
+    [Header("Player Controller")]
+    [SerializeField] private PlayerController2D playerController;
+
     private Story story;
 
     private bool dialoguePlaying = false;
 
-     // Start is called before the first frame update
+
+
 
     private void Awake()
     {
         story = new Story(inkJSON.text);
     }
 
-    private void Start()
-    {
-        gameEventsManager = FindObjectOfType<GameEventsManager>();
-    }
-
-    // private void ActivateDialogue()
+    // private void Start()
     // {
-    //     if (!dialogueKnotName.Equals(string.Empty))
-    //     {
-    //         GameEventsManager.instance.dialogueEvents.EnterDialogue(dialogueKnotName);
-    //     }
+    //     gameEventsManager = FindObjectOfType<GameEventsManager>();
     // }
+
 
    public void OnDialogueButtonClicked()
     {
@@ -49,18 +46,18 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
-        // GameEventsManager.instance.inputEvents.OnSubmitPressed += SubmitDialogue;
+    // private void OnEnable()
+    // {
+    //     GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
+    //     // GameEventsManager.instance.inputEvents.OnSubmitPressed += SubmitDialogue;
     
-    }
+    // }
 
-    private void OnDisable()
-    {
-        GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
-        // GameEventsManager.instance.inputEvents.OnSubmitPressed -= SubmitDialogue;
-    }
+    // private void OnDisable()
+    // {
+    //     GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
+    //     // GameEventsManager.instance.inputEvents.OnSubmitPressed -= SubmitDialogue;
+    // }
 
     private void SubmitDialogue()
     {
@@ -83,6 +80,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialoguePlaying = true;
+        // GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
+        // GameEventsManager.instance.dialogueEvents.EnterDialogue(knotName);
+        playerController.DisablePlayerMovement();
+
+
 
         if (knotName.Equals(dialogueKnotName))
         {
@@ -107,11 +109,18 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Dialogue ended.");
-            dialoguePlaying = false;
-
-            story.ResetState();
+            ExitDialogue();
         }
+    }
+
+    private void ExitDialogue()
+    {
+        Debug.Log("Dialogue ended.");
+
+        dialoguePlaying = false;
+        story.ResetState();
+        // GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
+        playerController.EnablePlayerMovement();
     }
 
 }

@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  canMove: 1
 --- !u!212 &228464523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1536,6 +1537,7 @@ MonoBehaviour:
   dialogueKnotName: npc
   gameEventsManager: {fileID: 1818141598}
   inkJSON: {fileID: 4900000, guid: 03cb7a9a1407d8241a25a24c7a1fa8d7, type: 3}
+  playerController: {fileID: 228464522}
 --- !u!4 &1022677839
 Transform:
   m_ObjectHideFlags: 0
