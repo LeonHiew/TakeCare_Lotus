@@ -11,8 +11,8 @@ public class PlayerController2D : MonoBehaviour
 
     public bool canMove = true;
 
-    public float clickMoveDuration = 3f;
-    private bool clickMoving = false;   
+    public float clickMoveDuration = 2f;
+    public bool clickMoving = false;   
 
     bool onLand = false;
 
@@ -29,9 +29,10 @@ public class PlayerController2D : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !clickMoving)
         {
-            Vector3 mouseScreenPos = Input.mousePosition;
-            Vector3 targetPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
+            
+            Vector3 targetPos = Camera.main.ScreenToWorldPoint(mousePos);
             targetPos.z = transform.position.z;
 
             StartCoroutine(MoveToPoint(targetPos));

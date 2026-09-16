@@ -519,6 +519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   canMove: 1
+  clickMoveDuration: 1
+  clickMoving: 0
 --- !u!212 &228464523
 SpriteRenderer:
   m_ObjectHideFlags: 0
