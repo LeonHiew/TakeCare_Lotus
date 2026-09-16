@@ -12,6 +12,7 @@ public class DialogueEvents
         if (onEnterDialogue != null)
         {
             onEnterDialogue.Invoke(knotName);
+            
         }
     }
 }
