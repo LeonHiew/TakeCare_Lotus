@@ -12,7 +12,37 @@ public class DialogueEvents
         if (onEnterDialogue != null)
         {
             onEnterDialogue.Invoke(knotName);
-            
+
+        }
+    }
+
+    public event Action onDialogueStarted;
+
+    public void DialogueStarted() 
+    {
+        if (onDialogueStarted != null)
+        {
+            onDialogueStarted();
+        }
+    }
+
+    public event Action onDialogueEnded;
+
+    public void DialogueEnded()
+    {
+        if (onDialogueEnded != null)
+        {
+            onDialogueEnded();
+        }
+    }
+
+    public event Action<string> onDisplayDialogueLine;
+
+    public void DisplayDialogue(string dialogueLine)
+    {
+        if (onDisplayDialogueLine != null)
+        {
+            onDisplayDialogueLine(dialogueLine);
         }
     }
 }

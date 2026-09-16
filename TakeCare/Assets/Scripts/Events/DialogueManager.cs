@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Player Controller")]
     [SerializeField] private PlayerController2D playerController;
+    [SerializeField] private DialogueUI dialogueUI;
 
     private Story story;
 
@@ -83,6 +84,7 @@ public class DialogueManager : MonoBehaviour
         // GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
         // GameEventsManager.instance.dialogueEvents.EnterDialogue(knotName);
         playerController.DisablePlayerMovement();
+        dialogueUI.DialogueStarted();
 
 
 
@@ -106,6 +108,7 @@ public class DialogueManager : MonoBehaviour
         {
             string content = story.Continue();
             Debug.Log(content);
+            dialogueUI.DisplayDialogue(content);
         }
         else
         {
@@ -121,6 +124,7 @@ public class DialogueManager : MonoBehaviour
         story.ResetState();
         // GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
         playerController.EnablePlayerMovement();
+        dialogueUI.DialogueFinished();
     }
 
 }
