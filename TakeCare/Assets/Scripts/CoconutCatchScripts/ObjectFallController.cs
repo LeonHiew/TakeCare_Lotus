@@ -10,6 +10,8 @@ public class ObjectFallController : MonoBehaviour
     [SerializeField] private GameObject goodFallingObject;
     [SerializeField] private GameObject badFallingObject;
     [SerializeField] private GameObject stunFallingObject;
+	[SerializeField] private GameObject rainbowFallingObject;
+
 
     [Header("Timings")] 
     [SerializeField] private float startMinWait = 1.2f;
@@ -27,6 +29,7 @@ public class ObjectFallController : MonoBehaviour
     [Header("Odds")] 
     [SerializeField, Range(0f, 1f)] private float badChance = 0.3f;
     [SerializeField, Range(0f, 1f)] private float stunChance = 0.1f;
+	[SerializeField, Range(0f, 1f)] private float rainbowChance = 0.1f;
 
 
     private float lastX = float.NegativeInfinity;
@@ -52,10 +55,13 @@ public class ObjectFallController : MonoBehaviour
     private GameObject PickPrefab()
     {
         float roll = Random.value;
+
         if (roll < stunChance)
             return stunFallingObject;
         if (roll < stunChance + badChance)
             return badFallingObject;
+		if (roll < stunChance + badChance + rainbowChance)
+			return rainbowFallingObject;
         return goodFallingObject;
     }
 

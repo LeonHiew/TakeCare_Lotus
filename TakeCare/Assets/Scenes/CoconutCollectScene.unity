@@ -479,6 +479,7 @@ MonoBehaviour:
   goodFallingObject: {fileID: 4481915048960503923, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
   badFallingObject: {fileID: 3596784995813074073, guid: 2963cfc9eef18684c9c2191bbe0e371e, type: 3}
   stunFallingObject: {fileID: 4747080671363364917, guid: 0059a690fbd40844dacebefa810dd24b, type: 3}
+  rainbowFallingObject: {fileID: 1036261697146875019, guid: 73bed79a7c3a2294c8e09f39c4b76b61, type: 3}
   startMinWait: 0.2
   startMaxWait: 0.95
   endMinWait: 0.35
@@ -490,6 +491,7 @@ MonoBehaviour:
   minSeperation: 2
   badChance: 0.2
   stunChance: 0.2
+  rainbowChance: 0.1
 --- !u!4 &559921297
 Transform:
   m_ObjectHideFlags: 0
