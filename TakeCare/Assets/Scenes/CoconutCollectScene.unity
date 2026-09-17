@@ -154,17 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac22cba1485a35f439ca8403208cc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+  moveSpeed: 20
   runMultiplier: 2
   sprintKey: 304
-  acceleration: 45
-  deceleration: 15
+  acceleration: 55
+  deceleration: 30
   turnAcceleration: 100
   dragInfluence: 1.5
   dashEnabled: 1
   dashKey: 32
-  dashSpeed: 25
-  dashDuration: 0.1
+  dashSpeed: 30
+  dashDuration: 0.15
   dashCooldown: 1
   shieldEnabled: 1
   shieldKey: 101
@@ -479,8 +479,8 @@ MonoBehaviour:
   goodFallingObject: {fileID: 4481915048960503923, guid: 5fafb8d8ec26b374d9d4a466e3293cf9, type: 3}
   badFallingObject: {fileID: 3596784995813074073, guid: 2963cfc9eef18684c9c2191bbe0e371e, type: 3}
   stunFallingObject: {fileID: 4747080671363364917, guid: 0059a690fbd40844dacebefa810dd24b, type: 3}
-  startMinWait: 1.2
-  startMaxWait: 2.2
+  startMinWait: 0.2
+  startMaxWait: 0.95
   endMinWait: 0.35
   endMaxWait: 0.8
   rampDuration: 90
