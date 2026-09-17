@@ -26,10 +26,15 @@ public class ObjectFallController : MonoBehaviour
     [SerializeField] private float maxX = 7f;
     [SerializeField] private float minSeperation = 2f;
 
-    [Header("Odds")] 
-    [SerializeField, Range(0f, 1f)] private float badChance = 0.3f;
-    [SerializeField, Range(0f, 1f)] private float stunChance = 0.1f;
-	[SerializeField, Range(0f, 1f)] private float rainbowChance = 0.1f;
+    [Header("Odds - start of game")] 
+    [SerializeField, Range(0f, 1f)] private float startBadChance = 0.05f;
+    [SerializeField, Range(0f, 1f)] private float startStunChance = 0f;
+	[SerializeField, Range(0f, 1f)] private float startRainbowChance = 0.05f;
+
+	[Header("Odds - end of game")] 
+    [SerializeField, Range(0f, 1f)] private float endBadChance = 0.3f;
+    [SerializeField, Range(0f, 1f)] private float endStunChance = 0.1f;
+	[SerializeField, Range(0f, 1f)] private float endRainbowChance = 0.1f;
 
 
     private float lastX = float.NegativeInfinity;
@@ -47,13 +52,17 @@ public class ObjectFallController : MonoBehaviour
             yield return new WaitForSeconds(wait);
             elapsed += wait;
 
-            GameObject prefab = PickPrefab();
+            GameObject prefab = PickPrefab(t);
             Instantiate(prefab, new Vector3(PickX(), spawnY, 0f), Quaternion.identity);
         }
     }
 
-    private GameObject PickPrefab()
+    private GameObject PickPrefab(float t)
     {
+		float badChance = Mathf.Lerp(startBadChance, endBadChance, t);
+		float stunChance = Mathf.Lerp(startStunChance, endStunChance, t);
+		float rainbowChance = Mathf.Lerp(startRainbowChance, endRainbowChance, t);
+		
         float roll = Random.value;
 
         if (roll < stunChance)

@@ -159,7 +159,7 @@ MonoBehaviour:
   sprintKey: 304
   acceleration: 55
   deceleration: 30
-  turnAcceleration: 100
+  turnAcceleration: 170
   dragInfluence: 1.5
   dashEnabled: 1
   dashKey: 32
@@ -480,18 +480,21 @@ MonoBehaviour:
   badFallingObject: {fileID: 3596784995813074073, guid: 2963cfc9eef18684c9c2191bbe0e371e, type: 3}
   stunFallingObject: {fileID: 4747080671363364917, guid: 0059a690fbd40844dacebefa810dd24b, type: 3}
   rainbowFallingObject: {fileID: 1036261697146875019, guid: 73bed79a7c3a2294c8e09f39c4b76b61, type: 3}
-  startMinWait: 0.2
-  startMaxWait: 0.95
-  endMinWait: 0.35
+  startMinWait: 0.6
+  startMaxWait: 1.2
+  endMinWait: 0.2
   endMaxWait: 0.8
-  rampDuration: 90
+  rampDuration: 5
   spawnY: 7
   minX: -7
   maxX: 7
   minSeperation: 2
-  badChance: 0.2
-  stunChance: 0.2
-  rainbowChance: 0.1
+  startBadChance: 0.05
+  startStunChance: 0.05
+  startRainbowChance: 0.05
+  endBadChance: 0.25
+  endStunChance: 0.15
+  endRainbowChance: 0.1
 --- !u!4 &559921297
 Transform:
   m_ObjectHideFlags: 0
