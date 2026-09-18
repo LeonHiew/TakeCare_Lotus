@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
         {
             virtualCamera.m_Lens.FieldOfView = BaseFov;
         }
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
