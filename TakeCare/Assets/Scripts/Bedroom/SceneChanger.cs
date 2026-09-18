@@ -11,7 +11,6 @@ public class SceneChanger : MonoBehaviour
 
     private void Awake()
     {
-        // Get the Cinemachine camera on this same GameObject
         pc_cam = GetComponent<CinemachineVirtualCamera>();
 
         if (pc_cam == null)
@@ -20,9 +19,9 @@ public class SceneChanger : MonoBehaviour
                 "SceneChanger: No CinemachineVirtualCamera found on this GameObject.",
                 this
             );
+            return;
         }
 
-        // Camera starts disabled
         pc_cam.enabled = false;
     }
 
@@ -31,9 +30,6 @@ public class SceneChanger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNearby = true;
-
-            // Enable camera when player enters trigger
-            pc_cam.enabled = true;
         }
     }
 
@@ -42,16 +38,23 @@ public class SceneChanger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNearby = false;
-
-            // Disable camera when player leaves trigger
             pc_cam.enabled = false;
         }
     }
 
     private void Update()
     {
-        // Press E while player is inside the trigger
-        if (playerNearby && Input.GetKeyDown(KeyCode.E))
+        if (!playerNearby)
+            return;
+
+        // Space toggles camera on/off
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            pc_cam.enabled = !pc_cam.enabled;
+        }
+
+        // E changes scene
+        if (Input.GetKeyDown(KeyCode.E))
         {
             SceneManager.LoadScene(sceneToLoad);
         }
