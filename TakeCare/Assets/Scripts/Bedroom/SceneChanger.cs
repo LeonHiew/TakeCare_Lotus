@@ -5,19 +5,34 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     public string sceneToLoad;
-    CinemachineVirtualCamera pc_cam;
+
+    private CinemachineVirtualCamera pc_cam;
     private bool playerNearby = false;
 
     private void Awake()
     {
-        pc_cam = GameObject.Find("PC Cam").GetComponent<CinemachineVirtualCamera>();
+        // Get the Cinemachine camera on this same GameObject
+        pc_cam = GetComponent<CinemachineVirtualCamera>();
+
+        if (pc_cam == null)
+        {
+            Debug.LogError(
+                "SceneChanger: No CinemachineVirtualCamera found on this GameObject.",
+                this
+            );
+        }
+
+        // Camera starts disabled
+        pc_cam.enabled = false;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerNearby = true;
+
+            // Enable camera when player enters trigger
             pc_cam.enabled = true;
         }
     }
@@ -27,15 +42,17 @@ public class SceneChanger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNearby = false;
+
+            // Disable camera when player leaves trigger
             pc_cam.enabled = false;
         }
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        if (playerNearby)
+        // Press E while player is inside the trigger
+        if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            pc_cam.enabled = true;
             SceneManager.LoadScene(sceneToLoad);
         }
     }
