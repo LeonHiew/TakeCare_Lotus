@@ -2,8 +2,8 @@ Shader "Custom/FadeOut" {
     Properties {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
-        _MinDistance ("Minimum Distance", float) = 2
-        _MaxDistance ("Maximum Distance", float) = 3
+        _MinDistance ("Minimum Distance", float) = 0.1
+        _MaxDistance ("Maximum Distance", float) = 0.2
     }
     SubShader {
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }

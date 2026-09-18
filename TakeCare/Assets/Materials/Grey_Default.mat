@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grey_Default
-  m_Shader: {fileID: 4800000, guid: 2cc4632cb6b15e44bb3ad36f02131c76, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -68,9 +68,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _MaxDistance: 3
+    - _MaxDistance: 0.1
     - _Metallic: 0
-    - _MinDistance: 2
+    - _MinDistance: 0.05
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
