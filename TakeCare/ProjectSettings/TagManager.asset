@@ -7,9 +7,10 @@ TagManager:
   - Ocean
   - Land
   - GoodItem
-  - Ground
   - BadItem
-  - StunItem
+  - Ground
+  - Computer
+  - pccam
   layers:
   - Default
   - TransparentFX
