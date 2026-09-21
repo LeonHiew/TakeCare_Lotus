@@ -21,8 +21,20 @@ public class PlayerController2D : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();  
+        rb = GetComponent<Rigidbody2D>();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
+
+    // void OnApplicationFocus(bool hasFocus)
+    // {
+    //     if (hasFocus)
+    //     {
+    //         Cursor.visible = true;
+    //         Cursor.lockState = CursorLockMode.None;
+    //     }
+    // }
 
     // Update is called once per frame
     void Update()
