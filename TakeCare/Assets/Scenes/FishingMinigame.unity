@@ -1599,7 +1599,7 @@ MonoBehaviour:
   hookMaxSpeed: 1
   hookSpriteRenderer: {fileID: 1250310515}
   progressBarContainer: {fileID: 2020920319}
-  failTimeLimit: 12
+  failTimeLimit: 9
   respawnDelay: 1.5
 --- !u!4 &1348212270
 Transform:
