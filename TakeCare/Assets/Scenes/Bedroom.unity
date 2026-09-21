@@ -1996,8 +1996,12 @@ PrefabInstance:
       propertyPath: m_SetToCameraToLookAtDistance
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 401802975927826910, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+    - {fileID: 2197784695049958612, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+    - {fileID: 9138662524910849433, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 2810899876029445277, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
