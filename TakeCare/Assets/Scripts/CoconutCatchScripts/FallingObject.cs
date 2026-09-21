@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class FallingObject : MonoBehaviour
 {
-    [Header("Score Value")] 
+    [Header("Effects")] 
     [SerializeField] private int scoreValue = 1;
+    [SerializeField] private float stunDuration = 0f;
     
     [Header("Spawn Boundary")] 
     [SerializeField] private float killY = -10f;
 
     private bool collected;
+    private bool IsHarmful => scoreValue < 0 || stunDuration > 0f;
 
     private void Update()
     {
@@ -28,7 +30,24 @@ public class FallingObject : MonoBehaviour
         {
 
             collected = true;
-            GameController.Instance.AddScore(scoreValue);
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+            if (IsHarmful && player != null && player.IsShieldActive())
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            if (stunDuration > 0f && player != null)
+            {
+                player.Stun(stunDuration);
+            }
+
+            if (scoreValue != 0)
+            {
+                GameController.Instance.AddScore(scoreValue);
+            }
+            
             Destroy(gameObject);
         }
 		else if (other.gameObject.CompareTag("Ground"))
