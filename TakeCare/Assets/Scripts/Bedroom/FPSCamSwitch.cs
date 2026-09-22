@@ -10,6 +10,8 @@ public class CamSwitcher : MonoBehaviour
 
     private bool isFirstPerson = false;
 
+    public bool IsFirstPerson => isFirstPerson;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))

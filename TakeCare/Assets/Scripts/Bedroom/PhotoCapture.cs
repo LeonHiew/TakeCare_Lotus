@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PhotoCapture : MonoBehaviour
 {
     [Header("Photo Taker")]
     [SerializeField] private Image photoDisplayArea;
     [SerializeField] private GameObject photoFrame;
+    [SerializeField] private GameObject cameraUI;
 
     [Header("Flash effect")] 
     [SerializeField] private GameObject cameraFlash;
@@ -16,6 +17,9 @@ public class NewBehaviourScript : MonoBehaviour
 
     [Header("Photo Fader Effect")] 
     [SerializeField] private Animator fadingAnimation;
+
+    [Header("Camera Mode")] 
+    [SerializeField] private CamSwitcher camSwitcher;
     
     private Texture2D screenCapture;
     private bool viewingPhoto;
@@ -23,26 +27,30 @@ public class NewBehaviourScript : MonoBehaviour
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        UpdateCameraUI();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        UpdateCameraUI();
+        
+        if (!Input.GetKeyDown(KeyCode.R))
+            return;
+
+        if (viewingPhoto)
         {
-            if (!viewingPhoto)
-            {
-                StartCoroutine(CapturePhoto());
-            }
-            else 
-            {
-                RemovePhoto();
-            }
+            RemovePhoto();
+        }
+        else if (camSwitcher.IsFirstPerson)
+        {
+            StartCoroutine(CapturePhoto());
         }
     }
     
 
     IEnumerator CapturePhoto()
     {
+        cameraUI.SetActive(false);
         
         viewingPhoto = true;
         
@@ -80,5 +88,15 @@ public class NewBehaviourScript : MonoBehaviour
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
+    }
+
+    private void UpdateCameraUI()
+    {
+        bool shouldShow = camSwitcher.IsFirstPerson && !viewingPhoto;
+
+        if (cameraUI.activeSelf != shouldShow)
+        {
+            cameraUI.SetActive(shouldShow);
+        }
     }
 }
