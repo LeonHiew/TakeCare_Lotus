@@ -3840,10 +3840,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camSwitcher: {fileID: 976669321}
-  sensitivity: 2
-  minPitch: -80
-  maxPitch: 80
+  sensitivity: 0.7
+  minPitch: -60
+  maxPitch: 45
+  minYaw: -45
+  maxYaw: 45
   lockCursorInFirstPerson: 1
+  scriptsToDisableFP:
+  - {fileID: 1960245990}
 --- !u!1 &1009169941
 GameObject:
   m_ObjectHideFlags: 0
@@ -6912,6 +6916,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934463383}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1960245990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 128480811414809273, guid: 730b9b3fed989fd4cab78eca9407fcfc, type: 3}
+  m_PrefabInstance: {fileID: 633160308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44085489ed0b2544b1ecf75fd89686b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1982305058
 GameObject:
   m_ObjectHideFlags: 3

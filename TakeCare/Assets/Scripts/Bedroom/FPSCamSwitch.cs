@@ -12,6 +12,7 @@ public class CamSwitcher : MonoBehaviour
 
     public bool IsFirstPerson => isFirstPerson;
 
+    //check if player has pressed button toggle to swap between first person and third person camera 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
@@ -20,6 +21,7 @@ public class CamSwitcher : MonoBehaviour
         }
     }
 
+    //changes the priority of third person and first person cameras to swap/ transition cameras using cinemachine 
     private void ToggleCamera()
     {
         isFirstPerson = !isFirstPerson;
