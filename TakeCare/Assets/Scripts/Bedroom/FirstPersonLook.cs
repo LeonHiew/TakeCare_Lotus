@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class FirstPersonLook : MonoBehaviour
@@ -19,10 +20,19 @@ public class FirstPersonLook : MonoBehaviour
 
     [Header("Movement lock")] 
     [SerializeField] private MonoBehaviour[] scriptsToDisableFP;
+
+    [Header("Zoom")] 
+    [SerializeField] private CinemachineVirtualCamera fpsCamera;
+    [SerializeField] private float defaultFov = 60f;
+    [SerializeField] private float minFov = 20f;
+    [SerializeField] private float zoomSpeed = 20f;
+    [SerializeField] private float zoomSmoothing = 10f;
+    
     
     private float yaw;
     private float pitch;
     private bool wasFirstPerson;
+    private float targetFov;
 
     private void Awake()
     {
@@ -39,6 +49,8 @@ public class FirstPersonLook : MonoBehaviour
         {
             yaw = 0f;
             pitch = 0f;
+            targetFov = defaultFov;
+            fpsCamera.m_Lens.FieldOfView = defaultFov;
             SetCursorLocked(true);
             SetMovementEnabled(false);
         }
@@ -54,13 +66,21 @@ public class FirstPersonLook : MonoBehaviour
         if (!isFirstPerson)
             return;
 
-        yaw += Input.GetAxis("Mouse X") * sensitivity;
-        pitch -= Input.GetAxis("Mouse Y") * sensitivity;
+        float zoomFactor = fpsCamera.m_Lens.FieldOfView / defaultFov;
+        
+        yaw += Input.GetAxis("Mouse X") * sensitivity * zoomFactor;
+        pitch -= Input.GetAxis("Mouse Y") * sensitivity * zoomFactor;
         
         yaw = Mathf.Clamp(yaw, minYaw, maxYaw);
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        targetFov = Mathf.Clamp(targetFov - scroll * zoomSpeed, minFov, defaultFov);
+
+        fpsCamera.m_Lens.FieldOfView =
+            Mathf.Lerp(fpsCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSmoothing);
 
     }
 
