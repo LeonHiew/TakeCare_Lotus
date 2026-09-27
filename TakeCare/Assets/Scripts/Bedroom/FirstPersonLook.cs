@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class FirstPersonLook : MonoBehaviour
 {
-    [SerializeField] private CamSwitcher camSwitcher;
+    [SerializeField] private FPSCamSwitch camSwitcher;
+    [SerializeField] private PhotoCapture photoCapture;
 
     [Header("Look Settings")] 
     [SerializeField] private float sensitivity = 1.2f;
@@ -33,11 +34,12 @@ public class FirstPersonLook : MonoBehaviour
     private float pitch;
     private bool wasFirstPerson;
     private float targetFov;
+    
 
     private void Awake()
     {
         if (camSwitcher == null)
-            camSwitcher = GetComponent<CamSwitcher>();
+            camSwitcher = GetComponent<FPSCamSwitch>();
     }
 
 
@@ -66,6 +68,9 @@ public class FirstPersonLook : MonoBehaviour
         if (!isFirstPerson)
             return;
 
+        if (photoCapture != null && photoCapture.IsViewingPhoto)
+            return;
+
         float zoomFactor = fpsCamera.m_Lens.FieldOfView / defaultFov;
         
         yaw += Input.GetAxis("Mouse X") * sensitivity * zoomFactor;
@@ -84,7 +89,7 @@ public class FirstPersonLook : MonoBehaviour
 
     }
 
-    private void SetCursorLocked(bool locked)
+    public void SetCursorLocked(bool locked)
     {
         if (!lockCursorInFirstPerson)
             return;

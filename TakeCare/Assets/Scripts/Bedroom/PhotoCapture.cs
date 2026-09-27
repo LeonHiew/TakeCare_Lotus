@@ -11,6 +11,12 @@ public class PhotoCapture : MonoBehaviour
     [SerializeField] private GameObject photoFrame;
     [SerializeField] private GameObject cameraUI;
 
+    [Header("Confirm/Retake")] 
+    [SerializeField] private GameObject confirmUI;
+    [SerializeField] private KeyCode confirmKey = KeyCode.Y;
+    [SerializeField] private KeyCode retakeKey = KeyCode.N;
+    [SerializeField] private FirstPersonLook firstPersonLook;
+
     [Header("Flash effect")] 
     [SerializeField] private GameObject cameraFlash;
     [SerializeField] private float flashTime;
@@ -19,32 +25,48 @@ public class PhotoCapture : MonoBehaviour
     [SerializeField] private Animator fadingAnimation;
 
     [Header("Camera Mode")] 
-    [SerializeField] private CamSwitcher camSwitcher;
+    [SerializeField] private FPSCamSwitch camSwitcher;
+
+    [Header("Moodboard")] 
+    [SerializeField] private Moodboard moodboard;
     
     private Texture2D screenCapture;
     private bool viewingPhoto;
+    public bool IsViewingPhoto => viewingPhoto;
 
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+
+        if (confirmUI != null)
+        {
+            confirmUI.SetActive(false);
+        }
+        
         UpdateCameraUI();
     }
 
     private void Update()
     {
         UpdateCameraUI();
-        
-        if (!Input.GetKeyDown(KeyCode.R))
-            return;
 
         if (viewingPhoto)
         {
-            RemovePhoto();
+            if (Input.GetKeyDown(confirmKey))
+            {
+                ConfirmPhoto();
+            }
+            else if (Input.GetKeyDown(retakeKey))
+            {
+                RetakePhoto();
+            }
+
+            return;
         }
-        else if (camSwitcher.IsFirstPerson)
-        {
+        
+        
+        if (Input.GetKeyDown(KeyCode.R) && camSwitcher.IsFirstPerson)
             StartCoroutine(CapturePhoto());
-        }
     }
     
 
@@ -53,6 +75,7 @@ public class PhotoCapture : MonoBehaviour
         cameraUI.SetActive(false);
         
         viewingPhoto = true;
+        camSwitcher.ToggleLocked = true;
         
         yield return new WaitForEndOfFrame();
 
@@ -60,6 +83,12 @@ public class PhotoCapture : MonoBehaviour
         
         screenCapture.ReadPixels(regionToRead, 0, 0, false);
         screenCapture.Apply();
+
+        if (firstPersonLook != null)
+        {
+            firstPersonLook.SetCursorLocked(false);
+        }
+        
         ShowPhoto();
         
     }
@@ -73,6 +102,11 @@ public class PhotoCapture : MonoBehaviour
         photoDisplayArea.sprite = photoSprite;
         
         photoFrame.SetActive(true);
+
+        if (confirmUI != null)
+        {
+            confirmUI.SetActive(true);
+        }
         
         fadingAnimation.Play("CamFadeAnimation");
     }
@@ -84,10 +118,42 @@ public class PhotoCapture : MonoBehaviour
         cameraFlash.SetActive(false);
     }
     
-    private void RemovePhoto()
+    public void RetakePhoto()
+    {
+        ClosePreview(true);
+    }
+
+    public void ConfirmPhoto()
+    {
+        if (moodboard != null)
+        {
+            Texture2D saved = new Texture2D(screenCapture.width, screenCapture.height, TextureFormat.RGB24, false);
+            saved.SetPixels(screenCapture.GetPixels());
+            saved.Apply();
+
+            moodboard.PlacePhoto(saved);
+        }
+        
+        ClosePreview(false);
+        camSwitcher.SetFirstPerson(false);
+    }
+
+    private void ClosePreview(bool relockCursor)
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
+
+        if (confirmUI != null)
+        {
+            confirmUI.SetActive(false);
+        }
+        
+        if (relockCursor && firstPersonLook != null)
+        {
+            firstPersonLook.SetCursorLocked(true);
+        }
+
+        camSwitcher.ToggleLocked = false;
     }
 
     private void UpdateCameraUI()
