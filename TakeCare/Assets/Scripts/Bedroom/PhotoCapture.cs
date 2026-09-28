@@ -10,6 +10,7 @@ public class PhotoCapture : MonoBehaviour
     [SerializeField] private Image photoDisplayArea;
     [SerializeField] private GameObject photoFrame;
     [SerializeField] private GameObject cameraUI;
+    [SerializeField] private GameObject instructionUI;
 
     [Header("Confirm/Retake")] 
     [SerializeField] private GameObject confirmUI;
@@ -158,11 +159,18 @@ public class PhotoCapture : MonoBehaviour
 
     private void UpdateCameraUI()
     {
-        bool shouldShow = camSwitcher.IsFirstPerson && !viewingPhoto;
-
-        if (cameraUI.activeSelf != shouldShow)
+        bool inFirstPerson = camSwitcher.IsFirstPerson;
+        
+        bool showCameraUI = inFirstPerson && !viewingPhoto;
+        if (cameraUI.activeSelf != showCameraUI)
         {
-            cameraUI.SetActive(shouldShow);
+            cameraUI.SetActive(showCameraUI);
+        }
+        
+        bool showInstructions = !inFirstPerson && !viewingPhoto;
+        if (instructionUI != null && instructionUI.activeSelf != showInstructions)
+        {
+            instructionUI.SetActive(showInstructions);
         }
     }
 }
