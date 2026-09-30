@@ -18,13 +18,21 @@ public class Scene3DUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnSettingsButtonClicked();
+        }
     }
 
     public void OnSettingsButtonClicked()
     {
         Debug.Log("Settings button clicked");
-        UnityEngine.SceneManagement.SceneManager.LoadScene(settingsButtonScene);
+
+        // Restore mouse before switching scenes
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneManager.LoadScene(settingsButtonScene);
     }
 
     
