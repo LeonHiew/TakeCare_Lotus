@@ -47,10 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1812474103440062918}
+  sfxSource: {fileID: 8370693460687429915}
   mainMenuMusic: {fileID: 8300000, guid: a0eace20e3f738645b62fa012ef28cf5, type: 3}
   bedroomMusic: {fileID: 8300000, guid: 2acea8f29f1bc4447b6a5a32d680ca2a, type: 3}
   scene2dMusic: {fileID: 8300000, guid: ae4ae88a122d39c478351acee13f5afc, type: 3}
   scene4Music: {fileID: 0}
+  hoverSFX: {fileID: 8300000, guid: f7822dd3ea20ace49b934489c016cc70, type: 3}
+  highlightSFX: {fileID: 8300000, guid: ba5b794de42aa0a4f92850c5678adee9, type: 3}
+  clickSFX: {fileID: 8300000, guid: 2ed56bc5eb794ae40bbe4b2000816dea, type: 3}
+  selectSFX: {fileID: 8300000, guid: 4b0083130f4f23e4bab08de256bac975, type: 3}
 --- !u!82 &1812474103440062918
 AudioSource:
   m_ObjectHideFlags: 0

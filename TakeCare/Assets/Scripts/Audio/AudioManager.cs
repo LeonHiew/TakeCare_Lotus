@@ -8,21 +8,29 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
 
+    [Header("Music")]
     [SerializeField] private AudioClip mainMenuMusic;
     [SerializeField] private AudioClip bedroomMusic;
     [SerializeField] private AudioClip scene2dMusic;
     [SerializeField] private AudioClip scene4Music;
 
+    [Header("SFX")]
+
+    [SerializeField] private AudioClip hoverSFX;
+    [SerializeField] private AudioClip highlightSFX;
+    [SerializeField] private AudioClip clickSFX;
+    [SerializeField] private AudioClip selectSFX;
+
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -90,6 +98,29 @@ public class AudioManager : MonoBehaviour
         musicSource.Stop();
         musicSource.clip = newMusic;
         musicSource.Play();
+    }
+
+
+    // SFX
+
+    public void PlayHoverSFX()
+    {
+        sfxSource.PlayOneShot(hoverSFX);
+    }
+
+    public void PlayHighlightSFX()
+    {
+        sfxSource.PlayOneShot(highlightSFX);
+    }
+
+    public void PlayClickSFX()
+    {
+        sfxSource.PlayOneShot(clickSFX);
+    }
+
+    public void PlaySelectSFX()
+    {
+        sfxSource.PlayOneShot(selectSFX);
     }
 
 
