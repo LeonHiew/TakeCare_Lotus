@@ -25,14 +25,28 @@ public class DialogueManager : MonoBehaviour
     private bool dialoguePlaying = false;
 
     private const string DayCountKey = "DayCount";
+    private static bool firstStarted = false;
 
 
     private void Awake()
     {
-        // Load saved day. Defaults to Day 1 if no save exists.
-        dayCount = PlayerPrefs.GetInt(DayCountKey, 1);
+        // Only reset once when the game is first started
+        if (!firstStarted)
+        {
+            PlayerPrefs.SetInt(DayCountKey, 1);
+            PlayerPrefs.Save();
 
+            firstStarted = true;
+        }
+
+        dayCount = PlayerPrefs.GetInt(DayCountKey, 1);
         UpdateDayCountText();
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetSession()
+    {
+        firstStarted = false;
     }
 
 
