@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Bedroom.unity
     guid: 986bd39b9df1981419f6e8f88f5c3d47
   - enabled: 1
-    path: Assets/Scenes/CoconutCollectScene.unity
+    path: Assets/Scenes/CoconutCollectSceneBaseLvl.unity
     guid: 9dca1aaaea099a94dbee91445c1fcc35
   - enabled: 1
     path: Assets/Scenes/controller.unity
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FishingMinigame.unity
     guid: fb12e61aed358a7458e4070d70baf7eb
+  - enabled: 1
+    path: Assets/Scenes/CoconutMinigameLvlSelct.unity
+    guid: 9bb3ed8e0dbc83042bd75c32b6b759e8
   m_configObjects: {}
