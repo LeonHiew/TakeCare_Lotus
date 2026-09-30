@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
@@ -10,6 +8,11 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [SerializeField] private AudioSource musicSource;
+
+    [SerializeField] private AudioClip mainMenuMusic;
+    [SerializeField] private AudioClip bedroomMusic;
+    [SerializeField] private AudioClip scene2dMusic;
+    [SerializeField] private AudioClip scene4Music;
 
 
     private void Awake()
@@ -23,22 +26,75 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         musicSource.loop = true;
-        musicSource.Play();
 
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
 
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void Start()
     {
+        ChangeSceneMusic(SceneManager.GetActiveScene());
+    }
 
-        if (scene.name == "Bedroom")
-            musicSource.Pause();
-            
+
+    private void OnSceneChanged(Scene oldScene, Scene newScene)
+    {
+        Debug.Log("Scene changed from " + oldScene.name + " to " + newScene.name);
+
+        ChangeSceneMusic(newScene);
+    }
+
+
+    private void ChangeSceneMusic(Scene scene)
+    {
+        Debug.Log("Changing music for scene: " + scene.name);
+
+        if (scene.name == "MainMenu")
+        {
+            ChangeMusic(mainMenuMusic);
+        }
+        else if (scene.name == "Bedroom")
+        {
+            ChangeMusic(bedroomMusic);
+        }
+        else if (scene.name == "Scene2D")
+        {
+            ChangeMusic(scene2dMusic);
+        }
+        else if (scene.name == "Scene4")
+        {
+            ChangeMusic(scene4Music);
+        }
         else
-            musicSource.UnPause();
+        {
+            Debug.LogWarning("No music configured for scene: " + scene.name);
+        }
+    }
+
+
+    private void ChangeMusic(AudioClip newMusic)
+    {
+        if (newMusic == null)
+        {
+            Debug.LogWarning("Music clip is null!");
+            return;
+        }
+
+        if (musicSource.clip == newMusic && musicSource.isPlaying)
+            return;
+
+        Debug.Log("Changing music to: " + newMusic.name);
+
+        musicSource.Stop();
+        musicSource.clip = newMusic;
+        musicSource.Play();
+    }
+
+
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= OnSceneChanged;
     }
 }

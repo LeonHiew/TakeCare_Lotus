@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1812474103440062918}
+  mainMenuMusic: {fileID: 8300000, guid: a0eace20e3f738645b62fa012ef28cf5, type: 3}
+  bedroomMusic: {fileID: 8300000, guid: 2acea8f29f1bc4447b6a5a32d680ca2a, type: 3}
+  scene2dMusic: {fileID: 8300000, guid: ae4ae88a122d39c478351acee13f5afc, type: 3}
+  scene4Music: {fileID: 0}
 --- !u!82 &1812474103440062918
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57,7 +61,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: be1d9ed20d61ebd47a1d0033725d9234, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
