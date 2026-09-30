@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButtonScene: Bedroom
-  coconutButtonScene: CoconutCollectScene
+  coconutButtonScene: CoconutMinigameLvlSelct
   fishingButtonScene: FishingMinigame
 --- !u!1 &132057314
 GameObject:
