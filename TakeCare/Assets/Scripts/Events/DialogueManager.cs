@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue Activation Settings")]
     [SerializeField] private string dialogueKnotName;
 
-    [SerializeField] private GameEventsManager gameEventsManager;
+    [Header("Ink Stories")]
+    [SerializeField] private List<TextAsset> inkStories = new List<TextAsset>();
 
-    [Header("Ink Story")]
-    [SerializeField] private TextAsset inkJSON;
+    [Header("Day Settings")]
+    [SerializeField] private int dayCount = 1;
+    [SerializeField] private TextMeshProUGUI dayCountText;
 
     [Header("Player Controller")]
     [SerializeField] private PlayerController2D playerController;
@@ -21,21 +24,19 @@ public class DialogueManager : MonoBehaviour
 
     private bool dialoguePlaying = false;
 
-
+    private const string DayCountKey = "DayCount";
 
 
     private void Awake()
     {
-        story = new Story(inkJSON.text);
+        // Load saved day. Defaults to Day 1 if no save exists.
+        dayCount = PlayerPrefs.GetInt(DayCountKey, 1);
+
+        UpdateDayCountText();
     }
 
-    // private void Start()
-    // {
-    //     gameEventsManager = FindObjectOfType<GameEventsManager>();
-    // }
 
-
-   public void OnDialogueButtonClicked()
+    public void OnDialogueButtonClicked()
     {
         if (dialoguePlaying)
         {
@@ -47,18 +48,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // private void OnEnable()
-    // {
-    //     GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
-    //     // GameEventsManager.instance.inputEvents.OnSubmitPressed += SubmitDialogue;
-    
-    // }
-
-    // private void OnDisable()
-    // {
-    //     GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
-    //     // GameEventsManager.instance.inputEvents.OnSubmitPressed -= SubmitDialogue;
-    // }
 
     private void SubmitDialogue()
     {
@@ -73,16 +62,30 @@ public class DialogueManager : MonoBehaviour
 
     private void EnterDialogue(string knotName)
     {
-
-        // Check if dialogue is already playing
         if (dialoguePlaying)
         {
             return;
         }
 
+        int storyIndex = dayCount - 1;
+
+        if (storyIndex < 0 || storyIndex >= inkStories.Count)
+        {
+            Debug.LogWarning("No Ink story assigned for Day " + dayCount);
+            return;
+        }
+
+        if (inkStories[storyIndex] == null)
+        {
+            Debug.LogWarning("Ink story for Day " + dayCount + " is empty.");
+            return;
+        }
+
+        // Load dialogue based on current saved day
+        story = new Story(inkStories[storyIndex].text);
+
         dialoguePlaying = true;
-        // GameEventsManager.instance.dialogueEvents.onEnterDialogue += EnterDialogue;
-        // GameEventsManager.instance.dialogueEvents.EnterDialogue(knotName);
+
         playerController.DisablePlayerMovement();
         dialogueUI.DialogueStarted();
 
@@ -91,7 +94,7 @@ public class DialogueManager : MonoBehaviour
         if (knotName.Equals(dialogueKnotName))
         {
             story.ChoosePathString(knotName);
-            Debug.Log("Entered Dialogue: " + knotName);
+            Debug.Log("Entered Day " + dayCount + " Dialogue: " + knotName);
         }
         else
         {
@@ -107,7 +110,9 @@ public class DialogueManager : MonoBehaviour
         if (story.canContinue)
         {
             string content = story.Continue();
+
             Debug.Log(content);
+
             dialogueUI.DisplayDialogue(content);
         }
         else
@@ -116,15 +121,36 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+
     private void ExitDialogue()
     {
-        Debug.Log("Dialogue ended.");
+        Debug.Log("Day " + dayCount + " dialogue ended.");
 
         dialoguePlaying = false;
+
         story.ResetState();
-        // GameEventsManager.instance.dialogueEvents.onEnterDialogue -= EnterDialogue;
+
         playerController.EnablePlayerMovement();
         dialogueUI.DialogueFinished();
+
+        // Increase to next day
+        dayCount++;
+
+        // Save day so it survives scene changes/reloads
+        PlayerPrefs.SetInt(DayCountKey, dayCount);
+        PlayerPrefs.Save();
+
+        UpdateDayCountText();
+
+        Debug.Log("Current day is now Day " + dayCount);
     }
 
+
+    private void UpdateDayCountText()
+    {
+        if (dayCountText != null)
+        {
+            dayCountText.text = "Day " + dayCount;
+        }
+    }
 }
