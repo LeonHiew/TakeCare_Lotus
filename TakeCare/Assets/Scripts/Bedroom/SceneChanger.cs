@@ -57,6 +57,7 @@ public class SceneChanger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             SceneManager.LoadScene(sceneToLoad);
+            
         }
     }
 }
