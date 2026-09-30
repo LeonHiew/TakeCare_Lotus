@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class CoconutLevelController : MonoBehaviour
 {
     [Header("Load to main")] 
+    [SerializeField] private string manualSceneName = "SampleScene";
     [SerializeField] private string homeSceneName = "SampleScene";
     [SerializeField] private string lvl1SceneName = "SampleScene";
     [SerializeField] private string lvl2SceneName = "SampleScene";
@@ -13,12 +14,17 @@ public class CoconutLevelController : MonoBehaviour
     
     
     [Header("UI Buttons")] 
+    [SerializeField] private GameObject manualButton; 
     [SerializeField] private GameObject lvl1Button; 
     [SerializeField] private GameObject lvl2Button;
     [SerializeField] private GameObject lvl3Button;
     [SerializeField] private GameObject homeButton; 
     
-    
+    public void manualClicked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(manualSceneName);
+    }
     public void lvl1Clicked()
     {
         Time.timeScale = 1f;
