@@ -1921,7 +1921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueKnotName: npc
   gameEventsManager: {fileID: 0}
-  inkJSON: {fileID: 4900000, guid: 03cb7a9a1407d8241a25a24c7a1fa8d7, type: 3}
+  inkJSON: {fileID: 4900000, guid: 49e6310cce935a245987a031945f2549, type: 3}
   playerController: {fileID: 228464522}
   dialogueUI: {fileID: 132057316}
 --- !u!4 &1022677839
