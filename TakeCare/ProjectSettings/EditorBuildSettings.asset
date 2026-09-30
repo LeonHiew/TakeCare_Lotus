@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CoconutMinigameLvlSelct.unity
     guid: 9bb3ed8e0dbc83042bd75c32b6b759e8
+  - enabled: 1
+    path: Assets/Scenes/CoconutCollectSceneLvl1.unity
+    guid: 2d76a2c74cc91f94883e6d56bec909c0
   m_configObjects: {}
