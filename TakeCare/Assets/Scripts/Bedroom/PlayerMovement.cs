@@ -1,30 +1,23 @@
 using UnityEngine;
-using Cinemachine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
-    public CinemachineVirtualCamera virtualCamera;
-
+    public float armstretchtimer = 14f;
+    public float crytimer = 10f;
     private Animator animator;
     private CharacterController characterController;
 
-    public float BaseFov = 50f;
     private Vector3 gravityVelocity;
-
-    public CinemachineImpulseSource sprintImpulse;
-
+    private float armstretchtime;
+    private float crytime;
+    private bool bIsTired = false;
     void Start()
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-
-        if (virtualCamera != null)
-        {
-            virtualCamera.m_Lens.FieldOfView = BaseFov;
-        }
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -42,6 +35,40 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("InputY", inputY);
         animator.SetBool("IsMoving", hasMovementInput);
 
+        if (hasMovementInput)
+        {
+            crytime = 0f;
+        }
+        else
+        {
+            crytime += Time.deltaTime;
+            if (crytime >= crytimer)
+            {
+                crytime = 0f;
+                int layer = animator.GetLayerIndex("UpperBody");
+                animator.CrossFadeInFixedTime("angry", 0.15f, layer);
+            }
+        }
+        
+        armstretchtime += Time.deltaTime;
+        if (armstretchtime >= armstretchtimer)
+        {
+            armstretchtime = 0f;
+            int layer = animator.GetLayerIndex("UpperBody");
+            if (bIsTired)
+            {
+                animator.CrossFadeInFixedTime("yawn", 0.15f, layer);
+            }
+            else
+            {
+                animator.CrossFadeInFixedTime("stretch", 0.15f, layer);
+            }
+            bIsTired = !bIsTired;
+        }
+
+        animator.SetLayerWeight(animator.GetLayerIndex("UpperBody"), 1f);
+        
+        
         if (hasMovementInput)
         {
             Vector3 camForward = cameraTransform.forward;
