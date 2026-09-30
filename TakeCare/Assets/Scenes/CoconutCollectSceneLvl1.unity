@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverCanvas: {fileID: 1814635172}
-  homeSceneName: Scene2D
+  homeSceneName: CoconutMinigameLvlSelct
   gameDuration: 20
   scoreText: {fileID: 986473049}
   timerText: {fileID: 885495308}
