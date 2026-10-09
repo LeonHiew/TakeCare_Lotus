@@ -653,12 +653,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac22cba1485a35f439ca8403208cc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 15
   runMultiplier: 2
   sprintKey: 304
-  acceleration: 55
+  acceleration: 60
   deceleration: 30
-  turnAcceleration: 170
+  turnAcceleration: 220
   dragInfluence: 1.5
   dashEnabled: 1
   dashKey: 32
